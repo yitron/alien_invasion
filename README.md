@@ -1,5 +1,6 @@
 # Alien Invasion: The Game
-christmas 2023 present for Thea and Ethan
+Christmas 2023 present for Thea and Ethan.
+With guidance from Python Crash Course 2e, Eric Mathes
 
 # Alien Invasion Description
 Alien Invasion
