@@ -6,6 +6,8 @@
 - checked for old bullets in list and .remove the bullets to save memory
 - added alien.bmp to draw entire alien fleet
 
+![Game](/images/game_surface_20231206.png)
+
 ## 04 December 2023
 - added new file structures
 - coded alien_invasion interface to handle game interfaces
