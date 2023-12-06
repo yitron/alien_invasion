@@ -1,5 +1,11 @@
 # Alien Invasion: The Game
 
+## 06 December 2023
+- added alien and bullet class
+- updated settings on number of bullets ready to fire
+- checked for old bullets in list and .remove the bullets to save memory
+- added alien.bmp to draw entire alien fleet
+
 ## 04 December 2023
 - added new file structures
 - coded alien_invasion interface to handle game interfaces
