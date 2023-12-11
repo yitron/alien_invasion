@@ -1,5 +1,12 @@
 # Alien Invasion: The Game
 
+## 11 December 2023
+- added game_stats.py as GameStats class to capture game statistics for ships (number of lives)
+- added alien movements
+- added collisions on rect sprites of ships and aliens to remove elements when any group collides
+
+![Game](/images/game_surface_20231211.png)
+
 ## 06 December 2023
 - added alien and bullet class
 - updated settings on number of bullets ready to fire
