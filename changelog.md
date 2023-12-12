@@ -1,5 +1,12 @@
 # Alien Invasion: The Game
 
+## 12 December 2023
+- added rendering of Play button to start game
+- added scoreboard.py and Scoreboard class to count scores
+- added helper function _check_play_button in alien_invasion.py to encapsulate behavior of game start and restart
+
+![Game](/images/game_surface_20231212.png)
+
 ## 11 December 2023
 - added game_stats.py as GameStats class to capture game statistics for ships (number of lives)
 - added alien movements
