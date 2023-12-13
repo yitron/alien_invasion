@@ -38,7 +38,7 @@ class AlienInvasion:
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            if self.stats.game_active:
+            if self.stats.game_active and not self.stats.game_paused:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
@@ -109,6 +109,8 @@ class AlienInvasion:
             self.stats.reset_stats()
             self.stats.game_active = True
             self.sb.prep_score()
+            self.sb.prep_level()
+            self.sb.prep_ships()
 
             # Clear any aliens and bullets.
             self.aliens.empty()
@@ -124,12 +126,16 @@ class AlienInvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
-        
-        # Quit game with Keypress Q
+        elif event.key == pygame.K_p:  # New key for pause
+            self._toggle_pause()
         elif event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+
+    def _toggle_pause(self):
+        """Toggle between pause and unpause."""
+        self.stats.game_paused = not self.stats.game_paused
 
     def _check_keyup_events(self, event):
         """Respond to key releases"""
@@ -168,12 +174,17 @@ class AlienInvasion:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
+            self.sb.check_high_score()
 
         if not self.aliens:
             # Destroy existing bullets and create new fleet.
             self.bullets.empty()
             self._create_fleet()
-            self.settings.increase_speed()        
+            self.settings.increase_speed()
+
+            # Increase level.
+            self.stats.level += 1
+            self.sb.prep_level()     
 
     def _update_aliens(self):
         """
@@ -195,6 +206,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # Decrement ships_left.
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
             # Get rid of any remaining aliens and bullets
             self.aliens.empty()
@@ -233,8 +245,16 @@ class AlienInvasion:
         # Draw the play button if the game is inactive.
         if not self.stats.game_active:
             self.play_button.draw_button()
+        elif self.stats.game_paused:  # Display pause message
+            self._draw_pause_message()
 
         pygame.display.flip()
+
+    def _draw_pause_message(self):
+        """Display a pause message."""
+        font = pygame.font.SysFont(None, 48)
+        pause_message = font.render("Paused", True, (255, 0, 0))
+        self.screen.blit(pause_message, (self.settings.screen_width // 2 - 80, self.settings.screen_height // 2))
 
 
 if __name__ == "__main__":

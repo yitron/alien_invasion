@@ -1,5 +1,11 @@
 # Alien Invasion: The Game
 
+## 13 December 2023
+- added levels, pause button 'P', high score and ship lives
+- completed game
+
+![Game](/images/game_surface_20231213.png)
+
 ## 12 December 2023
 - added rendering of Play button to start game
 - added scoreboard.py and Scoreboard class to count scores
