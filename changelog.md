@@ -1,5 +1,9 @@
 # Alien Invasion: The Game
 
+## 16 December 2023
+- added background sound
+- added 2 sound effect for bullets firing
+
 ## 13 December 2023
 - added levels, pause button 'P', high score and ship lives
 - completed game

@@ -11,15 +11,18 @@ from alien import Alien
 from button import Button
 
 class AlienInvasion:
-    """Overall class to manage game assets and behavior."""
-
-    def __init__(self):
-        """Initialize the game, and create game resources."""
+    def __init__(self, fullscreen=False):
         pygame.init()
-        self.settings = Settings()
+        pygame.mixer.init()
 
-        # Set the screen size to a specific width and height for windowed mode
-        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self.settings = Settings()
+        
+        if fullscreen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.settings.screen_width, self.settings.screen_height = self.screen.get_size()
+        else:
+            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+            
         pygame.display.set_caption("Alien Invasion")
 
         # Create an instance to store game statistics, and create a scoreboard.
@@ -33,6 +36,10 @@ class AlienInvasion:
 
         self._create_fleet()
         self.play_button = Button(self, "Play")
+
+        # Background music and sound effects
+        self.background_music = "sounds/background_ai_game.mp3"
+        self.bullet_sound = pygame.mixer.Sound("sounds/617034__d4xx__laser-shot.wav")
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -120,6 +127,13 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
 
+            # Load and play background music
+            pygame.mixer.music.load(self.background_music)
+            pygame.mixer.music.play(-1)  # -1 makes the music loop indefinitely
+
+            # Pause.
+            sleep(0.5)
+
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
         if event.key == pygame.K_RIGHT:
@@ -132,6 +146,7 @@ class AlienInvasion:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+            self.bullet_sound.play()
 
     def _toggle_pause(self):
         """Toggle between pause and unpause."""
@@ -258,5 +273,6 @@ class AlienInvasion:
 
 
 if __name__ == "__main__":
-    ai = AlienInvasion()
+    fullscreen_mode = "--fullscreen" in sys.argv
+    ai = AlienInvasion(fullscreen=fullscreen_mode)
     ai.run_game()
